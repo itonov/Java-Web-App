@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+<body>
+<th:block th:replace="fragments/navbar"></th:block>
+<div class="container mx-auto">
+    <h1 align="center">Всички поръчки</h1>
+    <table id="cssTable" class="table table-hover table-bordered table-responsive-md bg-olive">
+        <thead>
+        <tr align="center">
+            <th class="th-sm">Статус
+                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+            </th>
+            <th class="th-sm">Клиент - потребителско име
+                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+            </th>
+            <th class="th-sm">Клиент - имейл
+                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+            </th>
+            <th class="th-sm">Обща цена
+                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+            </th>
+            <th class="th-sm">Промяна на статус
+                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${allOrders}" align="center">
+            <td>
+                <p th:text="${order.status}"></p>
+            </td>
+            <td >
+
+            </td>
+            <td ></td>
+            <td>
+                <!--<a class="btn btn-info" th:href="|/parts/details/${part.id}|">Детайли</a>-->
+
+                <!--<a sec:authorize="hasAuthority('ADMIN')" class="btn btn-warning"-->
+                   <!--th:href="|/admin/parts/edit/${part.id}|">-->
+                    <!--Промени част-->
+                <!--</a>-->
+                <!--<a sec:authorize="hasAuthority('ADMIN')" class="btn btn-danger"-->
+                   <!--th:href="|/admin/parts/delete/${part.id}|">-->
+                    <!--Изтрий част-->
+                <!--</a>-->
+            </td>
+            <td >
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

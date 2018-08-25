@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+<body>
+<th:block th:replace="fragments/navbar"></th:block>
+<div class="container mx-auto">
+    <h1 align="center">Всички регистрирани потребители</h1>
+    <table id="cssTable" class="table table-hover table-bordered table-responsive-md bg-olive">
+        <thead>
+        <tr align="center">
+            <th class="th-sm">Потребителско име
+                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+            </th>
+            <th class="th-sm">Имейл
+                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+            </th>
+            <th class="th-sm">Дата на регистрация
+                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+            </th>
+            <th class="th-sm">Роли и детайли
+                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${allUsers}" align="center">
+            <td th:text="${user.username}">
+            </td>
+            <td th:text="${user.email}">
+            </td>
+            <td th:text="${#dates.format(user.registeredOn, 'dd-MM-yyyy')}"></td>
+            <td>
+                <a sec:authorize="hasAuthority('MODERATOR')" th:href="|/moderator/users/details/${user.username}|"
+                   class="btn btn-info">
+                    Детайли
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+<body>
+<th:block th:replace="fragments/navbar"></th:block>
+<div class="container">
+    <h1 th:if="${categoryType.equalsIgnoreCase('all')}" align="center">Всички налични видове техника</h1>
+    <h1 th:if="${categoryType.equalsIgnoreCase('whiteTech')}" align="center">Бяла техника</h1>
+    <h1 th:if="${categoryType.equalsIgnoreCase('blackTech')}" align="center">Черна техника</h1>
+    <h1 th:if="${categoryType.equalsIgnoreCase('other')}" align="center">Друга техника</h1>
+    <br/>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" th:each="product : ${allProducts}">
+                <div class="jumbotron bg-olive">
+                    <img th:if="${product.firstPictureBase64String != null}"
+                         th:src="|data:image/jpg;base64,${product.firstPictureBase64String}|"
+                         class="img-thumbnail zoom-hover">
+                    <div class="container" align="center">
+                        <p th:text="|Производител: ${product.make}|"></p>
+                        <p th:text="|Модел: ${product.model}|"></p>
+                        <p th:text="|Цена: ${product.price}|"></p>
+                        <div class="btn-link">
+                            <a class="btn btn-info" th:href="|/products/details/${product.id}|">Детайли и поръчка</a>
+                            <div class="divider2px"></div>
+                            <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-warning"
+                               th:href="|/admin/products/edit/${product.id}|">
+                                Промени продукт
+                            </a>
+                            <div class="divider2px"></div>
+                            <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-danger text-light"
+                               th:href="|/admin/products/delete/${product.id}|">
+                                Изтрий продукт
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

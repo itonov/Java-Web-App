@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+<body onload="gridPictures()">
+<th:block th:replace="fragments/navbar"></th:block>
+<div class="jumbotron-fluid mx-auto" align="center">
+    <h1 th:text="|Детайли за ${#strings.concat(productDetailsModel.make, ' ', productDetailsModel.model)}|"></h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <h3 align="center">Описание:</h3>
+            <p th:text="${productDetailsModel.description}" class="break-word"></p>
+        </div>
+        <div align="center" class="col-sm-6">
+            <h3 th:text="|Цена: ${productDetailsModel.price}лв|"></h3>
+            <div sec:authorize="isAnonymous()">
+                <a th:href="@{/register}">Регистрирай</a> се или <a th:href="@{/login}">влез</a> за да направиш поръчка.
+            </div>
+            <a sec:authorize="hasAuthority('USER')" class="btn btn-success disabled"
+               th:href="|/orders/create/product/${productId}|">
+                Добави поръчка
+            </a>
+            <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-warning"
+               th:href="|/admin/products/edit/${productId}|">
+                Промени продукт
+            </a>
+            <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-danger"
+               th:href="|/admin/products/delete/${productId}|">
+                Изтрий продукт
+            </a>
+        </div>
+    </div>
+</div>
+<div class="row-custom">
+    <div class="column-custom-grid" th:each="string : ${productDetailsModel.picturesContentsAsBase64}">
+        <img th:src="|data:image/jpg;base64,${string}|" class="zoom-hover">
+    </div>
+</div>
+
+</body>
+</html>

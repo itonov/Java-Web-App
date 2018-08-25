@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+<body>
+<th:block th:replace="fragments/navbar"></th:block>
+<div class="container mx-auto">
+    <h1 align="center">Всички налични части</h1>
+    <table id="cssTable" class="table table-hover table-bordered table-responsive-md bg-olive">
+        <thead>
+        <tr align="center">
+            <th class="th-sm">
+                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+            </th>
+            <th class="th-sm">Производител
+                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+            </th>
+            <th class="th-sm">Цена
+                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+            </th>
+            <th class="th-sm">Детайли и поръчка
+                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="part : ${allParts}" align="center">
+            <td>
+                <img th:if="${part.firstPictureBase64String != null}"
+                     th:src="|data:image/jpeg;base64, ${part.firstPictureBase64String}|" class="mainPictureSize zoom-hover">
+            </td>
+            <td th:text="${part.name}">
+
+            </td>
+            <td th:text="${part.price}"></td>
+            <td>
+                <a class="btn btn-info" th:href="|/parts/details/${part.id}|">Детайли</a>
+
+                <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-warning"
+                   th:href="|/admin/parts/edit/${part.id}|">
+                    Промени част
+                </a>
+                <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-danger"
+                   th:href="|/admin/parts/delete/${part.id}|">
+                    Изтрий част
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

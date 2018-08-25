@@ -1,0 +1,58 @@
+.mainPictureSize {
+    height: 60px;
+    width: 60px;
+}
+
+#cssTable td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.row-custom {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 4px;
+}
+
+.column-custom-grid {
+    flex: 50%;
+    padding: 0 4px;
+}
+
+.column-custom-grid img {
+    margin-top: 8px;
+    vertical-align: middle;
+    width: 100%;
+    height: auto;
+}
+
+.break-word {
+    word-wrap: break-word;
+}
+
+body, html {
+    background-color: #7FDBFF;
+    height: 100%;
+}
+
+.bg-olive {
+    background-color: #3D9970;
+}
+
+.homeBackground {
+    height: 100%;
+    background: url("../images/homeBackgroundImage.jpg") no-repeat center;
+    background-size: cover;
+}
+
+.divider2px {
+    border: 2px solid transparent;
+}
+
+.zoom-hover {
+    transition: transform .2s;
+}
+
+.zoom-hover:hover {
+    transform: scale(1.5);
+}

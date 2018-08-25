@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+<body onload="gridPictures()">
+<th:block th:replace="fragments/navbar"></th:block>
+<div class="container align-content-center">
+    <form th:method="post" th:action="|/admin/parts/edit/${partId}|" th:object="${partEditBindingModel}"
+          class="form-horizontal"
+          enctype="multipart/form-data">
+        <h1 class="control-label" align="center"
+            th:text="|Промяна на ${partEditBindingModel.name}|"></h1>
+        <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-danger'">
+            <label for="name">Име:</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}"
+                   th:placeholder="${partName}">
+            <small th:each="error : ${#fields.errors('name')}" th:text="|${error} |" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="description">Описание:</label>
+            <textarea rows="5" type="text" class="form-control" id="description" th:field="*{description}"
+                      th:placeholder="${partEditBindingModel.description}"></textarea>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('quantity')} ? 'has-danger'">
+            <label for="quantity">Количество:</label>
+            <input type="number" step="1" class="form-control" id="quantity" th:field="*{quantity}"
+                   th:placeholder="${partEditBindingModel.quantity}">
+            <small th:each="error : ${#fields.errors('quantity')}" th:text="|${error} |" class="text-danger"></small>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('price')} ? 'has-danger'">
+            <label for="price">Цена:</label>
+            <input type="number" step="0.01" class="form-control" id="price" th:field="*{price}"
+                   th:placeholder="${partEditBindingModel.price}">
+            <small th:each="error : ${#fields.errors('price')}" th:text="|${error} |" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="newPictures">Нови снимки:</label>
+            <div id="newPictures">
+                <input type="file" accept="multipart/encrypted, image/jpeg"
+                       class="form-control-file" th:field="*{newPictures}" onchange="checkFileSize(this)">
+                <input type="file" accept="multipart/encrypted, image/jpeg"
+                       class="form-control-file" th:field="*{newPictures}" onchange="checkFileSize(this)">
+                <input type="file" accept="multipart/encrypted, image/jpeg"
+                       class="form-control-file" th:field="*{newPictures}" onchange="checkFileSize(this)">
+                <input type="file" accept="multipart/encrypted, image/jpeg"
+                       class="form-control-file" th:field="*{newPictures}" onchange="checkFileSize(this)">
+                <input type="file" accept="multipart/encrypted, image/jpeg"
+                       class="form-control-file" th:field="*{newPictures}" onchange="checkFileSize(this)">
+                <input type="file" accept="multipart/encrypted, image/jpeg"
+                       class="form-control-file" th:field="*{newPictures}" onchange="checkFileSize(this)">
+            </div>
+            <small hidden id="invalidFileSizeMessage" class="text-danger">
+                Невалиден файл. Позволен размер - до 4МБ. Разширения - JPG/JPEG.
+            </small>
+            <small th:each="error : ${#fields.errors('newPictures')}" th:text="|${error} |" class="text-danger"></small>
+        </div>
+        <button type="submit" class="btn btn-primary">Промени</button>
+        <a th:action="@{/}" class="btn btn-secondary">Отказ</a>
+    </form>
+</div>
+<div class="row-custom" th:if="${!#lists.isEmpty(partEditBindingModel.picturesContentsAsBase64)}">
+    <div class="column-custom-grid" th:each="string : ${partEditBindingModel.picturesContentsAsBase64}">
+        <img th:src="|data:image/jpg;base64,${string}|">
+    </div>
+</div>
+</body>
+</html>

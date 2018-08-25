@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+<body onload="gridPictures()">
+<th:block th:replace="fragments/navbar"></th:block>
+<div class="jumbotron-fluid mx-auto" align="center">
+    <h1 th:text="|Детайли за ${userDetailsModel.username}|"></h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <p th:text="|Имейл: ${userDetailsModel.email}|" class="break-word"></p>
+            <p th:text="|Дата на регистрация: ${#dates.format(userDetailsModel.registeredOn, 'dd-MM-yyyy')}|"></p>
+        </div>
+        <div align="center" class="col-sm-6">
+            <h3>Роли на потребителя: </h3>
+            <div th:each="string : ${userDetailsModel.authoritiesAsString}">
+                <p th:text="${string}"></p>
+            </div>
+            <a th:if="${#sets.contains(userDetailsModel.authoritiesAsString, 'ADMIN')}"
+               sec:authorize="hasAuthority('MODERATOR')" class="btn btn-danger"
+               th:href="|/moderator/users/removeAdmin/${userDetailsModel.username}|">
+                Премахни админ
+            </a>
+            <a th:if="${!#sets.contains(userDetailsModel.authoritiesAsString, 'ADMIN')}"
+               sec:authorize="hasAuthority('MODERATOR')" class="btn btn-success"
+               th:href="|/moderator/users/makeAdmin/${userDetailsModel.username}|">
+                Направи админ
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

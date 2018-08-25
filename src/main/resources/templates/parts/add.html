@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+<body>
+<th:block th:replace="fragments/navbar"></th:block>
+<div class="container align-content-center">
+    <form th:method="post" th:action="@{/admin/parts/add}" th:object="${partAddBindingModel}" class="form-horizontal"
+          enctype="multipart/form-data">
+        <h1 class="control-label" align="center">Добави нова част</h1>
+        <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-danger'">
+            <label for="make">Име:</label>
+            <input type="text" class="form-control" id="make" th:field="*{name}" placeholder="Име...">
+            <small th:each="error : ${#fields.errors('name')}" th:text="|${error} |" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="description">Описание:</label>
+            <textarea rows="5" type="text" class="form-control" id="description" th:field="*{description}"
+                      placeholder="Описание..."></textarea>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('price')} ? 'has-danger'">
+            <label for="price">Цена:</label>
+            <input type="number" step="0.01" class="form-control" id="price" th:field="*{price}" placeholder="Цена...">
+            <small th:each="error : ${#fields.errors('price')}" th:text="|${error} |" class="text-danger"></small>
+        </div>
+        <div class="form-group" th:classappend="${#fields.hasErrors('quantity')} ? 'has-danger'">
+            <label for="quantity">Количество:</label>
+            <input type="number" step="1" class="form-control" id="quantity" th:field="*{quantity}" placeholder="Количество...">
+            <small th:each="error : ${#fields.errors('quantity')}" th:text="|${error} |" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="newPictures">Снимки:</label>
+            <div id="newPictures">
+                <input type="file" accept="multipart/encrypted, image/jpeg"
+                       class="form-control-file" th:field="*{pictures}" onchange="checkFileSize(this)">
+                <input type="file" accept="multipart/encrypted, image/jpeg"
+                       class="form-control-file" th:field="*{pictures}" onchange="checkFileSize(this)">
+                <input type="file" accept="multipart/encrypted, image/jpeg"
+                       class="form-control-file" th:field="*{pictures}" onchange="checkFileSize(this)">
+                <input type="file" accept="multipart/encrypted, image/jpeg"
+                       class="form-control-file" th:field="*{pictures}" onchange="checkFileSize(this)">
+                <input type="file" accept="multipart/encrypted, image/jpeg"
+                       class="form-control-file" th:field="*{pictures}" onchange="checkFileSize(this)">
+                <input type="file" accept="multipart/encrypted, image/jpeg"
+                       class="form-control-file" th:field="*{pictures}" onchange="checkFileSize(this)">
+            </div>
+            <small hidden id="invalidFileSizeMessage" class="text-danger">
+                Невалиден файл. Позволен размер - до 4МБ. Разширения - JPG/JPEG.
+            </small>
+            <small th:each="error : ${#fields.errors('pictures')}" th:text="|${error} |" class="text-danger"></small>
+        </div>
+        <button type="submit" class="btn btn-primary">Добави</button>
+    </form>
+</div>
+</body>
+</html>
